@@ -9,6 +9,8 @@ import removeIcon from '@/public/lixeira.svg';
 import { useSelector, useDispatch } from 'react-redux';
 import { RootState } from '../store';
 import { incrementItem, decrementItem, removeItem } from '@/store/cartSlice';
+import '../styles/components/_cart.scss';
+import { motion } from 'framer-motion';
 
 const Cart: React.FC = () => {
   const [isOpen, setIsOpen] = useState(false);
@@ -38,6 +40,8 @@ const Cart: React.FC = () => {
     dispatch(removeItem(id));
   };
 
+  const totalAmount = items.reduce((total, item) => total + item.price * item.quantity, 0);
+
   useEffect(() => {
     document.addEventListener("mousedown", handleClickOutside);
     return () => {
@@ -46,56 +50,99 @@ const Cart: React.FC = () => {
   }, []);
 
   return (
-    <div className="relative" ref={cartRef}>
-      <div className="flex text-center justify-center cursor-pointer" onClick={toggleCart}>
-        <Image src={cart} alt="Logo starsoft" width={33} height={33} />
-        <span className="flex text-white text-center self-center ml-[13px]">
-          {items.reduce((total, item) => total + item.quantity, 0)}
-        </span>
+    <div className="cart__container" ref={cartRef}>
+  <motion.div className="cart__toggle" 
+    onClick={toggleCart} 
+    whileHover={{ scale: 1.1 }} // Efeito de escala ao passar o mouse
+    transition={{ type: "spring", stiffness: 300 }} // Efeito suave
+  >
+    <Image src={cart} alt="carrinho de compras" width={33} height={33} />
+    <span>
+      {items.reduce((total, item) => total + item.quantity, 0)}
+    </span>
+  </motion.div>
+  {isOpen && (
+    <motion.div 
+      className="cart__content"
+      initial={{ opacity: 0, scale: 0.8 }} // Inicia pequeno e transparente
+      animate={{ opacity: 1, scale: 1 }} // Aumenta para o tamanho original
+      exit={{ opacity: 0, scale: 0.8 }} // Encolhe e fica transparente ao sair
+      transition={{ duration: 0.3 }} // Duração da animação
+    >
+      <div className="cart__content__header">
+        <motion.div className="cart__content__header-back" 
+        onClick={toggleCart}
+        whileHover={{ scale: 1.1 }} // Efeito de escala ao passar o mouse
+        transition={{ type: "spring", stiffness: 300 }}>
+          <Image src={backArrow} alt="fechar carrinho" />
+        </motion.div>
+        <h1 className="cart__content__header-title">Mochila de Compras</h1>
       </div>
-      {isOpen && (
-        <div className="absolute right-16 mt-6 pt-[63px] px-[30px] w-[697px] rounded-lg shadow-lg z-50 bg-[#232323]">
-          <div className='flex mb-[164.5px]'>
-            <div className='bg-[#373737] p-3 rounded-full ml-[70px]'>
-              <Image src={backArrow} alt="" />
-            </div>
-            <h1 className='text-white text-[24px] ml-[84px] text-nowrap'>Mochila de Compras</h1>
-          </div>
-          {items.length > 0 ? (
-            items.map((item) => (
-              <div key={item.id} className="rounded-lg py-[19.5px] px-[30px] bg-[#2B2B2B] shadow-lg mb-4 flex flex-col">
-                <div className='flex items-center'>
-                  <div className='bg-[#22232C] rounded-lg w-[161px] min-h-[161px]'>
-                    <Image src={item.image} alt={item.title} className="mx-auto my-auto" />
+      {items.length > 0 ? (
+        <>
+          {items.map((item) => (
+            <motion.div 
+              key={item.id} 
+              className="cart-item"
+              initial={{ opacity: 1, y: 0 }} // Início visível
+                  animate={{ opacity: 1, y: 0 }} // Fica visível na posição original
+                  exit={{ opacity: 0, y: -20 }} // Desaparece e se move para cima
+                  transition={{ duration: 0.3, ease: "easeInOut" }} // Duração e suavidade
+            >
+              <div className="cart-item__image">
+                <Image src={item.image} alt={item.title} />
+              </div>
+              <div className="cart-item__details">
+                <h4>{item.title}</h4>
+                <p>{item.description}</p>
+                <div className="price">
+                  <Image src={eth} alt="Moeda" width={29} height={29} />
+                  <span>{item.price} ETH</span>
+                </div>
+                <div className="quantity">
+                  <div className="quantity-controls">
+                    <motion.button 
+                      whileHover={{ scale: 1.05 }}
+                      whileTap={{ scale: 0.95 }} 
+                      onClick={() => handleDecrement(item.id)}>-</motion.button>
+                    <span>{item.quantity}</span>
+                    <motion.button 
+                      whileHover={{ scale: 1.05 }}
+                      whileTap={{ scale: 0.95 }} 
+                      onClick={() => handleIncrement(item.id)}>+</motion.button>
                   </div>
-                  <div className="ml-4 flex-1">
-                    <h4 className="text-lg text-white font-bold">{item.title}</h4>
-                    <p className="text-[#CCCCCC] font-sans text-xs font-light">{item.description}</p>
-                    <div className="flex items-center mt-[10px]">
-                      <Image src={eth} alt="Moeda" width={29} height={29} />
-                      <span className="ml-[10px] text-xl font-bold uppercase">{item.price} ETH</span>
-                    </div>
-                    <div className="flex items-center mt-[16px]">
-                      <div className="bg-[#232323] flex justify-between text-white py-[14.5px] px-2 rounded-lg">
-                        <button onClick={() => handleIncrement(item.id)} className="mr-[34.4px]">+</button>
-                        <span className="">{item.quantity}</span>
-                        <button onClick={() => handleDecrement(item.id)} className="ml-[34.4px]">-</button>
-                      </div>
-                      <button onClick={() => handleRemove(item.id)} className="ml-auto bg-[#FF8310] text-white p-3 rounded-full">
-                        <Image src={removeIcon} alt="remover produto do carrinho"></Image>
-                      </button>
-                    </div>
-                  </div>
+                  <motion.button 
+                    whileHover={{ scale: 1.05 }}
+                    whileTap={{ scale: 0.95 }}
+                    onClick={() => handleRemove(item.id)} className="remove">
+                    <Image src={removeIcon} alt="remover produto do carrinho" />
+                  </motion.button>
                 </div>
               </div>
-            ))
-          ) : (
-            <p className="p-4 text-center text-gray-500">Seu carrinho está vazio.</p>
-          )}
-        </div>
+            </motion.div>
+          ))}
+          <div className="total">
+            <h3>Total</h3>
+            <div className="total-amount">
+              <Image src={eth} alt="Moeda" width={34} height={34} />
+              <span>{totalAmount} ETH</span>
+            </div>
+          </div>
+          <motion.button 
+            whileHover={{ scale: 1.05 }}
+            whileTap={{ scale: 0.95 }}
+            className="checkout-button"> Finalizar Compra
+          </motion.button>
+        </>
+      ) : (
+        <p className="empty-message">Seu carrinho está vazio.</p>
       )}
-    </div>
+    </motion.div>
+  )}
+</div>
+
+
   );
 };
 
-export default Cart
+export default Cart;

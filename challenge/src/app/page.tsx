@@ -11,6 +11,9 @@ import produto5 from '@/public/prod5.svg';
 import produto6 from '@/public/prod6.svg';
 import produto7 from '@/public/prod7.svg';
 import produto8 from '@/public/prod8.svg';
+import '../styles/pages/_home.scss';
+import { motion } from 'framer-motion';
+
 
 const allProducts = [
   { id: '1', image: produto1, title: 'Lorem Ipsum 1', description: 'Redesigned from scratch and completely revised.', price: 32 },
@@ -40,8 +43,14 @@ const HomePage = () => {
   return (
     <div>
       <Header />
-      <main className="px-[136.5px] mt-[189px] grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-5 mb-5">
+      <main className="product-grid">
         {allProducts.slice(0, visibleProducts).map((product) => (
+          <motion.div
+          key={product.id}
+            initial={{ opacity: 0, y: 20 }} // Início invisível e abaixo
+            animate={{ opacity: 1, y: 0 }} // Fica visível na posição original
+            exit={{ opacity: 0, y: -20 }} // Desaparece e sobe um pouco
+            transition={{ duration: 0.3, ease: "easeInOut" }} > 
           <ProductCard
             key={product.id}
             id={product.id}
@@ -50,21 +59,29 @@ const HomePage = () => {
             description={product.description}
             price={product.price}
           />
+          </motion.div>
         ))}
       </main>
-      <div className="px-[136.5px] text-center mt-[20px] mb-[214px]">
-        <div className="max-w-[403px] bg-gray-200 mx-auto rounded-full h-2.5 mb-4 mt-[189px]">
-          <div className="bg-[#FF8310] h-2.5 rounded-full" style={{ width: `${progress}%` }}></div>
+      <div className="load-more-container">
+        <div className="progress-bar">
+          <motion.div className="progress" 
+            initial={{ width: 0 }} // Inicia a animação com 0%
+            animate={{ width: `${progress}%` }} // Anima para a largura do progresso
+            transition={{ duration: 0.5 }} // Duração da animação
+            style={{ width: `${progress}%` }}></motion.div>
         </div>
-        <button
-          className="bg-[#FF8310] text-white text-center py-[30px] px-[151px] rounded mt-[11px]"
+        <motion.button
+          className="load-more-button"
           onClick={loadMore}
+          whileHover={{ scale: 1.05 }} // Aumenta um pouco ao passar o mouse
+          whileTap={{ scale: 0.95 }} // Diminui um pouco ao clicar
+          transition={{ duration: 0.2 }} // Suavidade da animação
         >
           {isAllShown ? 'Você já viu tudo!' : 'Carregar mais'}
-        </button>
+        </motion.button>
       </div>
-      <div className='flex justify-center text-center'>
-        <p className='mx-auto text-[#FFFFFF70] text-[14px] mb-[25px]'>STARSOFT © TODOS OS DIREITOS RESERVADOS</p>
+      <div className="footer">
+        <p className="footer-text">STARSOFT © TODOS OS DIREITOS RESERVADOS</p>
       </div>
     </div>
   );

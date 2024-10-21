@@ -4,11 +4,12 @@ import React from 'react';
 import Image from 'next/image';
 import logo from '../public/logo.svg';
 import Cart from './Cart';
+import '../styles/components/_header.scss'; // Importando o estilo Sass
 
 const Header: React.FC = () => {
   return (
-    <header className="bg-[#232323] px-[41px] py-[33px] flex justify-between items-center border-b border-b-gray-600">
-      <Image src={logo} alt="Logo starsoft" width={101} height={38} />
+    <header className="header">
+      <Image src={logo} alt="Logo starsoft"/>
       <Cart />
     </header>
   );

@@ -5,6 +5,8 @@ import { useDispatch } from 'react-redux';
 import { addItem } from '@/store/cartSlice';
 import Image from 'next/image';
 import eth from '@/public/Ellipse 770.svg';
+import '../styles/components/_productCard.scss';
+import { motion } from 'framer-motion';
 
 interface ProductCardProps {
   id: string;
@@ -22,25 +24,33 @@ const ProductCard: React.FC<ProductCardProps> = ({ id, image, title, description
   };
 
   return (
-    <div className="rounded-lg py-[26px] px-[24.5px] bg-[#191A20] shadow-lg max-w-[345px] flex flex-col">
-      <div className='bg-[#22232C] rounded-lg min-h-[258px] px-[24.5px] flex text-center self-center'>
-        <Image src={image} alt={title} className="" />
-      </div>
-      <div className='text-left'>
-        <h2 className="text-lg text-white font-bold mt-[49px] mb-[10px]">{title}</h2>
-        <p className="text-[#CCCCCC] font-sans text-xs font-light whitespace-nowrap">{description}</p>
-        <div className="flex mt-[30px]">
-          <Image src={eth} alt="Moeda" />
-          <span className="ml-[10px] text-xl font-bold uppercase">{price} ETH</span>
-        </div>
-        <button
-          onClick={handleAddToCart}
-          className="bg-[#FF8310] text-base uppercase text-white py-[22px] w-full mt-[24px] rounded-lg"
-        >
-          Comprar
-        </button>
-      </div>
+    <motion.div 
+      className="product-card"
+      initial={{ opacity: 0, scale: 0.9 }} 
+      animate={{ opacity: 1, scale: 1 }}
+      transition={{ duration: 0.3 }}
+    >
+  <div className="product-card__image-container">
+    <Image src={image} alt={title} />
+  </div>
+  <div className="product-card__details">
+    <h2>{title}</h2>
+    <p>{description}</p>
+    <div className="price">
+      <Image src={eth} alt="Moeda" />
+      <span>{price} ETH</span>
     </div>
+    <motion.button
+      onClick={handleAddToCart}
+      className="add-to-cart"
+      whileHover={{ scale: 1.05 }}
+      whileTap={{ scale: 0.95 }}
+    >
+      Comprar
+    </motion.button>
+  </div>
+</motion.div>
+
   );
 };
 
