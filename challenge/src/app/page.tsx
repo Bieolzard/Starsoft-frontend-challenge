@@ -47,9 +47,9 @@ const HomePage = () => {
         {allProducts.slice(0, visibleProducts).map((product) => (
           <motion.div
           key={product.id}
-            initial={{ opacity: 0, y: 20 }} // Início invisível e abaixo
-            animate={{ opacity: 1, y: 0 }} // Fica visível na posição original
-            exit={{ opacity: 0, y: -20 }} // Desaparece e sobe um pouco
+            initial={{ opacity: 0, y: 20 }}  
+            animate={{ opacity: 1, y: 0 }} 
+            exit={{ opacity: 0, y: -20 }} 
             transition={{ duration: 0.3, ease: "easeInOut" }} > 
           <ProductCard
             key={product.id}
@@ -65,17 +65,17 @@ const HomePage = () => {
       <div className="load-more-container">
         <div className="progress-bar">
           <motion.div className="progress" 
-            initial={{ width: 0 }} // Inicia a animação com 0%
-            animate={{ width: `${progress}%` }} // Anima para a largura do progresso
-            transition={{ duration: 0.5 }} // Duração da animação
+            initial={{ width: 0 }} 
+            animate={{ width: `${progress}%` }} 
+            transition={{ duration: 0.5 }}
             style={{ width: `${progress}%` }}></motion.div>
         </div>
         <motion.button
           className="load-more-button"
           onClick={loadMore}
-          whileHover={{ scale: 1.05 }} // Aumenta um pouco ao passar o mouse
-          whileTap={{ scale: 0.95 }} // Diminui um pouco ao clicar
-          transition={{ duration: 0.2 }} // Suavidade da animação
+          whileHover={{ scale: 1.05 }}
+          whileTap={{ scale: 0.95 }} 
+          transition={{ duration: 0.2 }}
         >
           {isAllShown ? 'Você já viu tudo!' : 'Carregar mais'}
         </motion.button>

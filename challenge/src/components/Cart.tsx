@@ -53,8 +53,8 @@ const Cart: React.FC = () => {
     <div className="cart__container" ref={cartRef}>
   <motion.div className="cart__toggle" 
     onClick={toggleCart} 
-    whileHover={{ scale: 1.1 }} // Efeito de escala ao passar o mouse
-    transition={{ type: "spring", stiffness: 300 }} // Efeito suave
+    whileHover={{ scale: 1.1 }} 
+    transition={{ type: "spring", stiffness: 300 }} 
   >
     <Image src={cart} alt="carrinho de compras" width={33} height={33} />
     <span>
@@ -64,15 +64,15 @@ const Cart: React.FC = () => {
   {isOpen && (
     <motion.div 
       className="cart__content"
-      initial={{ opacity: 0, scale: 0.8 }} // Inicia pequeno e transparente
-      animate={{ opacity: 1, scale: 1 }} // Aumenta para o tamanho original
-      exit={{ opacity: 0, scale: 0.8 }} // Encolhe e fica transparente ao sair
-      transition={{ duration: 0.3 }} // Duração da animação
+      initial={{ opacity: 0, scale: 0.8 }} 
+      animate={{ opacity: 1, scale: 1 }} 
+      exit={{ opacity: 0, scale: 0.8 }} 
+      transition={{ duration: 0.3 }} 
     >
       <div className="cart__content__header">
         <motion.div className="cart__content__header-back" 
         onClick={toggleCart}
-        whileHover={{ scale: 1.1 }} // Efeito de escala ao passar o mouse
+        whileHover={{ scale: 1.1 }} 
         transition={{ type: "spring", stiffness: 300 }}>
           <Image src={backArrow} alt="fechar carrinho" />
         </motion.div>
@@ -84,10 +84,10 @@ const Cart: React.FC = () => {
             <motion.div 
               key={item.id} 
               className="cart-item"
-              initial={{ opacity: 1, y: 0 }} // Início visível
-                  animate={{ opacity: 1, y: 0 }} // Fica visível na posição original
-                  exit={{ opacity: 0, y: -20 }} // Desaparece e se move para cima
-                  transition={{ duration: 0.3, ease: "easeInOut" }} // Duração e suavidade
+              initial={{ opacity: 1, y: 0 }} 
+                  animate={{ opacity: 1, y: 0 }}
+                  exit={{ opacity: 0, y: -20 }} 
+                  transition={{ duration: 0.3, ease: "easeInOut" }} 
             >
               <div className="cart-item__image">
                 <Image src={item.image} alt={item.title} />

@@ -1,7 +1,8 @@
 import type { Metadata } from "next";
-import "./globals.css";
+import '../styles/main.scss';
 import Providers from "./Provider";
 import Head from "next/head";
+
 
 
 
