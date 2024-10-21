@@ -3,62 +3,44 @@
 import React, { useState } from 'react';
 import Header from '@/components/Header';
 import ProductCard from '@/components/ProductCard';
-import produto1 from '@/public/prod1.svg';
-import produto2 from '@/public/prod2.svg';
-import produto3 from '@/public/prod3.svg';
-import produto4 from '@/public/prod4.svg';
-import produto5 from '@/public/prod5.svg';
-import produto6 from '@/public/prod6.svg';
-import produto7 from '@/public/prod7.svg';
-import produto8 from '@/public/prod8.svg';
 import '../styles/pages/_home.scss';
 import { motion } from 'framer-motion';
-
-
-const allProducts = [
-  { id: '1', image: produto1, title: 'Lorem Ipsum 1', description: 'Redesigned from scratch and completely revised.', price: 32 },
-  { id: '2', image: produto2, title: 'Lorem Ipsum 2', description: 'Redesigned from scratch and completely revised.', price: 12 },
-  { id: '3', image: produto3, title: 'Lorem Ipsum 3', description: 'Redesigned from scratch and completely revised.', price: 32 },
-  { id: '4', image: produto4, title: 'Lorem Ipsum 4', description: 'Redesigned from scratch and completely revised.', price: 32 },
-  { id: '5', image: produto5, title: 'Lorem Ipsum 5', description: 'Redesigned from scratch and completely revised.', price: 32 },
-  { id: '6', image: produto6, title: 'Lorem Ipsum 6', description: 'Redesigned from scratch and completely revised.', price: 32 },
-  { id: '7', image: produto7, title: 'Lorem Ipsum 7', description: 'Redesigned from scratch and completely revised.', price: 32 },
-  { id: '8', image: produto8, title: 'Lorem Ipsum 8', description: 'Redesigned from scratch and completely revised.', price: 32 },
-];
+import { useQuery } from 'react-query';
+import { fetchProducts } from '@/services/api'; // Certifique-se de que o caminho está correto
+import { Product } from '@/interfaces/Product'; // Certifique-se de que a interface Product está definida corretamente
 
 const HomePage = () => {
   const [visibleProducts, setVisibleProducts] = useState<number>(4);
   const [isAllShown, setIsAllShown] = useState<boolean>(false);
 
+  const { data: products = [], isLoading, isError } = useQuery<Product[], Error>('products', fetchProducts);
+
   const loadMore = () => {
-    if (visibleProducts >= allProducts.length) {
+    if (visibleProducts >= products.length) {
       setIsAllShown(true);
     } else {
       setVisibleProducts((prev) => prev + 4);
     }
   };
 
-  const progress = Math.min((visibleProducts / allProducts.length) * 100, 100);
+  const progress = Math.min((visibleProducts / products.length) * 100, 100);
+
+  if (isLoading) return <div>Loading...</div>;
+  if (isError) return <div>Error loading products</div>;
 
   return (
     <div>
       <Header />
       <main className="product-grid">
-        {allProducts.slice(0, visibleProducts).map((product) => (
+        {products.slice(0, visibleProducts).map((product) => (
           <motion.div
-          key={product.id}
+            key={product.id}
             initial={{ opacity: 0, y: 20 }}  
             animate={{ opacity: 1, y: 0 }} 
             exit={{ opacity: 0, y: -20 }} 
-            transition={{ duration: 0.3, ease: "easeInOut" }} > 
-          <ProductCard
-            key={product.id}
-            id={product.id}
-            image={product.image}
-            title={product.title}
-            description={product.description}
-            price={product.price}
-          />
+            transition={{ duration: 0.3, ease: "easeInOut" }} 
+          > 
+            <ProductCard key={product.id} {...product} />
           </motion.div>
         ))}
       </main>
@@ -68,7 +50,8 @@ const HomePage = () => {
             initial={{ width: 0 }} 
             animate={{ width: `${progress}%` }} 
             transition={{ duration: 0.5 }}
-            style={{ width: `${progress}%` }}></motion.div>
+            style={{ width: `${progress}%` }} 
+          />
         </div>
         <motion.button
           className="load-more-button"

@@ -31,7 +31,12 @@ const ProductCard: React.FC<ProductCardProps> = ({ id, image, title, description
       transition={{ duration: 0.3 }}
     >
   <div className="product-card__image-container">
-    <Image src={image} alt={title} />
+      <Image className='rounded'
+          src={image} 
+          alt={title} 
+          width={217} // Ajuste o valor conforme necessário
+          height={217} // Ajuste o valor conforme necessário
+          ></Image>
   </div>
   <div className="product-card__details">
     <h2>{title}</h2>
