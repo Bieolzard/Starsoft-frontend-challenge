@@ -769,8 +769,8 @@
       &__header {
         display: flex;
         align-items: center;
-        justify-content: center; // Centraliza o header
-        margin-bottom: 20px; // Margem inferior ajustada
+        justify-content: center; 
+        margin-bottom: 20px; 
   
         &-back {
           background-color: #373737;
@@ -792,12 +792,12 @@
         }
       }
       .cart-item {
-         // Ajusta o padding dos itens
-        flex-direction: column; // Alinha os itens do carrinho em coluna
+         
+        flex-direction: column; 
   
         &__image {
-          width: 100px; // Diminui o tamanho da imagem
-          height: 100px; // Diminui o tamanho da imagem
+          width: 100px; 
+          height: 100px; 
         }
   
         &__details {
@@ -806,54 +806,54 @@
           margin-top: 10px;
 
           h4 {
-            font-size: 0.875rem; // Diminui o tamanho do título
+            font-size: 0.875rem; 
           }
   
           p {
-            font-size: 0.625rem; // Diminui o tamanho da descrição
+            font-size: 0.625rem; 
           }
   
           .price {
             span {
-              font-size: 1rem; // Diminui o tamanho do preço
+              font-size: 1rem; 
             }
           }
   
           .quantity-controls {
             button {
-              font-size: 0.75rem; // Diminui o tamanho dos botões
+              font-size: 0.75rem; 
             }
           }
         }
       }
   
       .total {
-        margin-top: 20px; // Ajusta a margem
-        margin-bottom: 20px; // Ajusta a margem
+        margin-top: 20px; 
+        margin-bottom: 20px; 
   
         h3 {
-          font-size: 1rem; // Diminui o tamanho do título total
+          font-size: 1rem;
         }
   
         .total-amount {
           img {
-            width: 25px; // Diminui o tamanho da imagem do total
-            height: 25px; // Diminui o tamanho da imagem do total
+            width: 25px; 
+            height: 25px;
           }
   
           span {
-            font-size: 1.25rem; // Diminui o tamanho do valor total
+            font-size: 1.25rem; 
           }
         }
       }
   
       .checkout-button {
-        padding: 15px; // Ajuste o padding
-        font-size: 0.875rem; // Diminui o tamanho do texto do botão
+        padding: 15px; 
+        font-size: 0.875rem; 
       }
   
       .empty-message {
-        font-size: 0.75rem; // Diminui o tamanho da mensagem vazia
+        font-size: 0.75rem; 
       }
     }
   }
