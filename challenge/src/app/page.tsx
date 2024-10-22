@@ -10,7 +10,7 @@ import { fetchProducts } from '@/services/api'; // Certifique-se de que o caminh
 import { Product } from '@/interfaces/Product'; // Certifique-se de que a interface Product está definida corretamente
 
 const HomePage = () => {
-  const [visibleProducts, setVisibleProducts] = useState<number>(4);
+  const [visibleProducts, setVisibleProducts] = useState<number>(8);
   const [isAllShown, setIsAllShown] = useState<boolean>(false);
 
   const { data: products = [], isLoading, isError } = useQuery<Product[], Error>('products', fetchProducts);
