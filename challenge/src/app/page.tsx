@@ -1,6 +1,6 @@
 "use client";
 
-import React, { useState } from 'react';
+import React, { useState, useEffect } from 'react';
 import Header from '@/components/Header';
 import ProductCard from '@/components/ProductCard';
 import '../styles/pages/_home.scss';
@@ -11,16 +11,11 @@ import { Product } from '@/interfaces/Product';
 
 const HomePage = () => {
   const [visibleProducts, setVisibleProducts] = useState<number>(8);
-  const [isAllShown, setIsAllShown] = useState<boolean>(false);
 
   const { data: products = [], isLoading, isError } = useQuery<Product[], Error>('products', fetchProducts);
 
   const loadMore = () => {
-    if (visibleProducts >= products.length) {
-      setIsAllShown(true);
-    } else {
-      setVisibleProducts((prev) => prev + 4);
-    }
+    setVisibleProducts((prev) => prev + 4);
   };
 
   const progress = Math.min((visibleProducts / products.length) * 100, 100);
@@ -59,8 +54,9 @@ const HomePage = () => {
           whileHover={{ scale: 1.05 }}
           whileTap={{ scale: 0.95 }} 
           transition={{ duration: 0.2 }}
+          disabled={visibleProducts >= products.length} 
         >
-          {isAllShown ? 'Você já viu tudo!' : 'Carregar mais'}
+          {visibleProducts >= products.length ? 'Você já viu tudo!' : 'Carregar mais'}
         </motion.button>
       </div>
       <div className="footer">
