@@ -6,8 +6,8 @@ import ProductCard from '@/components/ProductCard';
 import '../styles/pages/_home.scss';
 import { motion } from 'framer-motion';
 import { useQuery } from 'react-query';
-import { fetchProducts } from '@/services/api'; // Certifique-se de que o caminho está correto
-import { Product } from '@/interfaces/Product'; // Certifique-se de que a interface Product está definida corretamente
+import { fetchProducts } from '@/services/api'; 
+import { Product } from '@/interfaces/Product'; 
 
 const HomePage = () => {
   const [visibleProducts, setVisibleProducts] = useState<number>(8);
