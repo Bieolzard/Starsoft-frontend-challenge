@@ -1,6 +1,5 @@
 "use client"
 
-import type { Metadata } from "next";
 import '../styles/main.scss';
 import Providers from "./Provider";
 import { QueryClient, QueryClientProvider } from 'react-query';

@@ -22,8 +22,8 @@
     text-align: left;
     display: flex;
     flex-direction: column;
-    flex-grow: 1; /* Expande para ocupar espaço disponível */
-    justify-content: space-between; /* Mantém o botão e o preço na base */
+    flex-grow: 1; 
+    justify-content: space-between; 
 
     h2 {
       color: #fff;
@@ -40,14 +40,14 @@
       max-height: 10rem; 
       text-align: left;
       text-wrap: pretty;
-      text-overflow: ellipsis; /* Adiciona "..." no final do texto longo */
-      margin-bottom: 20px; /* Adiciona espaçamento entre a descrição e o preço */
+      text-overflow: ellipsis; 
+      margin-bottom: 20px;
     }
 
     .price {
       display: flex;
       align-items: center;
-      margin-top: auto; /* Empurra o preço para o final do container */
+      margin-top: auto; 
       
       img {
         margin-right: 10px;
@@ -67,7 +67,7 @@
       text-transform: uppercase;
       padding-block: 22px;
       width: 100%;
-      margin-top: 24px; /* Ajusta o espaço entre o botão e o conteúdo acima */
+      margin-top: 24px; 
       border-radius: 8px;
       text-align: center;
       cursor: pointer;
