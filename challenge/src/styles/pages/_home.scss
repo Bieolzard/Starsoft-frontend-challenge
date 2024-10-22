@@ -1,16 +1,21 @@
 .product-grid {
-    padding-left: 136.5px;
-    padding-right: 136.5px;
-    margin-top: 189px;
+    padding-inline: 2rem;
+    justify-items: center;
+    margin-top: 50px;
     display: grid;
     grid-template-columns: repeat(1, 1fr);
     gap: 20px;
     
     @media (min-width: 768px) {
+      padding-left: 40px; // Padding para tablets
+      padding-right: 40px; // Padding para tablets
       grid-template-columns: repeat(2, 1fr);
     }
   
     @media (min-width: 1024px) {
+      padding-left: 136.5px; // Volta ao padding original para desktops
+      padding-right: 136.5px; // Volta ao padding original para desktops
+      margin-top: 189px;
       grid-template-columns: repeat(4, 1fr);
     }
   
@@ -23,20 +28,52 @@
     text-align: center;
     margin-top: 20px;
     margin-bottom: 214px;
+    
+    @media (max-width: 768px) {
+      padding-left: 136.5px;
+      padding-right: 136.5px;
+    }
+
+    @media (max-width: 420px) { 
+      padding-left: 20px;
+      padding-right: 20px;
+    }
   
     .progress-bar {
-      max-width: 25%;
+      max-width: 100%;
       background-color: gray;
       margin: auto;
       border-radius: 9999px;
       height: 10px;
       margin-bottom: 4px;
-      margin-top: 189px;
+      margin-top: 100px;
   
       .progress {
         background-color: #FF8310;
         height: 10px;
         border-radius: 9999px;
+      }
+  
+      @media (max-width: 768px) {
+        max-width: 100%;
+        margin-top: 100px; 
+        height: 10px; 
+      }
+  
+      @media (max-width: 420px) { 
+        max-width: 88%;
+        height: 10px; 
+        margin-top: 80px; 
+      }
+  
+      @media (min-width: 1024px) {
+        max-width: 25%;
+        background-color: gray;
+        margin: auto;
+        border-radius: 9999px;
+        height: 10px;
+        margin-bottom: 4px;
+        margin-top: 189px;
       }
     }
   
@@ -45,21 +82,47 @@
       color: white;
       text-align: center;
       padding-block: 30px;
-      width: 25%;
+      width: 100%;
       border-radius: 8px;
       margin-top: 11px;
+  
+      @media (max-width: 768px) {
+        text-align: center;
+        padding-block: 30px;
+        width: 100%;
+        border-radius: 8px;
+        margin-top: 11px;
+      }
+  
+      @media (max-width: 420px) { 
+        padding-block: 20px;
+        padding-inline: 20px;
+        font-size: 0.9rem; 
+        border-radius: 6px; 
+        width: 88%; 
+      }
+  
+      @media (min-width: 1024px) {
+        text-align: center;
+        padding-block: 30px;
+        width: 25%;
+        border-radius: 8px;
+        margin-top: 11px;
+      }
     }
   }
+  
   
   .footer {
     display: flex;
     justify-content: center;
     text-align: center;
+    padding: 20px 10px; // Ajuste o padding para telas menores
   
     .footer-text {
       margin: auto;
       color: rgba(255, 255, 255, 0.7);
       font-size: 14px;
-      margin-bottom: 25px;
+      margin-bottom: 10px; 
     }
-}
+  }
