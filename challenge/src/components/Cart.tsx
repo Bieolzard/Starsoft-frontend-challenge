@@ -1,31 +1,25 @@
 "use client";
 
-import Image from 'next/image';
-import React, { useState, useEffect, useRef } from 'react';
-import cart from '../public/Bag.svg';
-import backArrow from '../public/arrow.svg';
-import eth from '@/public/Ellipse 770.svg';
-import removeIcon from '@/public/lixeira.svg';
+import React, { useState, useEffect } from 'react';
 import { useSelector, useDispatch } from 'react-redux';
 import { RootState } from '../store';
-import { incrementItem, decrementItem, removeItem } from '@/store/cartSlice';
+import { incrementItem, decrementItem, removeItem, clearCart } from '@/store/cartSlice';
+import Image from 'next/image';
+import eth from '@/public/Ellipse 770.svg';
+import removeIcon from '@/public/lixeira.svg';
+import cart from '../public/Bag.svg';
+import backArrow from '../public/arrow.svg';
 import '../styles/components/_cart.scss';
 import { motion } from 'framer-motion';
 
 const Cart: React.FC = () => {
   const [isOpen, setIsOpen] = useState(false);
+  const [purchaseCompleted, setPurchaseCompleted] = useState(false);
   const items = useSelector((state: RootState) => state.cart.items);
   const dispatch = useDispatch();
-  const cartRef = useRef<HTMLDivElement>(null);
 
   const toggleCart = () => {
     setIsOpen(!isOpen);
-  };
-
-  const handleClickOutside = (event: MouseEvent) => {
-    if (cartRef.current && !cartRef.current.contains(event.target as Node)) {
-      setIsOpen(false);
-    }
   };
 
   const handleIncrement = (id: string) => {
@@ -40,27 +34,30 @@ const Cart: React.FC = () => {
     dispatch(removeItem(id));
   };
 
+  const handlePurchase = () => {
+    setPurchaseCompleted(true);
+    dispatch(clearCart());
+  };
+
   const totalAmount = items.reduce((total, item) => total + item.price * item.quantity, 0);
 
+  
   useEffect(() => {
-    document.addEventListener("mousedown", handleClickOutside);
-    return () => {
-      document.removeEventListener("mousedown", handleClickOutside);
-    };
-  }, []);
+    if (items.length > 0) {
+      setPurchaseCompleted(false);
+    }
+  }, [items]);
 
   return (
-    <div className="cart__container" ref={cartRef}>
+    <div className="cart__container">
       <motion.div 
         className="cart__toggle" 
         onClick={toggleCart} 
         whileHover={{ scale: 1.1 }} 
-        transition={{ type: "spring", stiffness: 300 }} 
+        transition={{ type: "spring", stiffness: 300 }}
       >
         <Image src={cart} alt="carrinho de compras" width={33} height={33} />
-        <span>
-          {items.reduce((total, item) => total + item.quantity, 0)}
-        </span>
+        <span>{items.reduce((total, item) => total + item.quantity, 0)}</span>
       </motion.div>
       {isOpen && (
         <motion.div 
@@ -117,7 +114,9 @@ const Cart: React.FC = () => {
                       <motion.button 
                         whileHover={{ scale: 1.05 }}
                         whileTap={{ scale: 0.95 }}
-                        onClick={() => handleRemove(item.id)} className="remove">
+                        onClick={() => handleRemove(item.id)} 
+                        className="remove"
+                      >
                         <Image src={removeIcon} alt="remover produto do carrinho" />
                       </motion.button>
                     </div>
@@ -131,11 +130,20 @@ const Cart: React.FC = () => {
                   <span>{totalAmount} ETH</span>
                 </div>
               </div>
-              <motion.button 
-                whileHover={{ scale: 1.05 }}
-                whileTap={{ scale: 0.95 }}
-                className="checkout-button"> Finalizar Compra
-              </motion.button>
+              {purchaseCompleted ? (
+                <button className="checkout-button" disabled>
+                  Compra finalizada!
+                </button>
+              ) : (
+                <motion.button 
+                  whileHover={{ scale: 1.05 }}
+                  whileTap={{ scale: 0.95 }}
+                  className="checkout-button"
+                  onClick={handlePurchase}
+                >
+                  Finalizar Compra
+                </motion.button>
+              )}
             </>
           ) : (
             <p className="empty-message">Seu carrinho está vazio.</p>
