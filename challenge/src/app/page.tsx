@@ -20,7 +20,13 @@ const HomePage = () => {
 
   const progress = Math.min((visibleProducts / products.length) * 100, 100);
 
-  if (isLoading) return <div>Loading...</div>;
+  if (isLoading) {
+    return (
+      <div className="loading-container">
+        <div className="loading-spinner"></div>
+      </div>
+    );
+  }
   if (isError) return <div>Error loading products</div>;
 
   return (
